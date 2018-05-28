@@ -1,0 +1,103 @@
+<html>
+    <head>
+
+        <meta charset="utf-8"/>
+
+        <title>Rectangle Particles</title>
+
+    </head>
+
+    <body>
+
+        <canvas id="myCanvas"></canvas>
+
+        <script>
+
+            var canvas = document.getElementById("myCanvas"),
+                ctx = canvas.getContext("2d");
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                rects = [],
+                speedX = 5,
+                speedY = 5,
+
+                logo = document.getElementById("logo");
+
+
+            
+            //Constructor for rects
+            function rect (posX, posY, speedX, speedY) {
+
+                this.posX = posX;
+                this.posY = posY;
+                this.speedX = speedX;
+                this.speedY = speedY;
+                this.life = 0;
+                this.maxLife = 500;
+
+            }
+
+            //Generates new rects
+            function generateRect(){
+
+                    var rectStartX = window.innerWidth / 2
+                        rectStartY = window.innerHeight / 2,
+                        rectSpeedX = Math.floor(Math.random() * 10) - 5,
+                        rectSpeedY = Math.floor(Math.random() * 10) - 5,
+                      
+
+                    rects.unshift(new rect(rectStartX, rectStartY, rectSpeedX, rectSpeedY ));
+ 
+            }
+
+            generateRect();
+
+            function cleanScreen(){
+
+                ctx.fillStyle = "black";
+                ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+                ctx.fillRect(0, 0, window.innerWidth, window.innerHeight, );
+
+            }
+
+            //Draws the Screen
+            function drawScreen(rect){
+
+                var deathMove = 200;
+                
+                if (rect.life < rect.maxLife - deathMove) rect.posX += rect.speedX / 2 + Math.floor(Math.random() * 3) - 1;
+                if (rect.life < rect.maxLife - deathMove) rect.posY += rect.speedY / 2 + Math.floor(Math.random() * 3) - 1;
+
+                if (rect.life > rect.maxLife - deathMove)rect.posX += rect.speedX + rect.speedX;
+                if (rect.life > rect.maxLife - deathMove)rect.posY += rect.speedY + rect.speedX;
+
+                if (rect.life < rect.maxLife - deathMove){
+                if(Math.floor(Math.random() * 1000) <= 50) rect.speedX = rect.speedX * -1;
+                if(Math.floor(Math.random() * 1000) <= 50) rect.speedY = rect.speedY * -1;
+                }
+
+                rect.life++;
+                if(rect.life >= rect.maxLife) rects.pop();
+
+                ctx.fillStyle = "rgba(0, 0, 200, 0.5";
+                ctx.fillRect(rect.posX, rect.posY, 50, 50)
+
+                ctx.font = "120px Arial";
+                //ctx.fillText("Hack!", window.innerWidth / 2, window.innerHeight / 2); 
+              
+            }
+
+            function animate(){
+                cleanScreen();
+                if (Math.floor(Math.random() * 5) - 1 === 1) generateRect();
+                rects.forEach(drawScreen);
+            }
+
+            setInterval(animate, 20);
+
+        </script>
+
+    </body>
+
+</html>

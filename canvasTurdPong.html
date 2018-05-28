@@ -1,0 +1,83 @@
+<html>
+
+<head>
+<meta charset="utf-8"/>
+<title>Canvas Test</title>
+</head>
+
+<body>
+
+<canvas id="myCanvas"></canvas>
+
+<img id ="turd" src="http://www.stickpng.com/assets/images/580b57fcd9996e24bc43c39c.png"/>
+
+
+<script>
+
+var x = 10;
+var y = 10;
+var flipX = false;
+var flipY = false;
+
+var turd = document.getElementById("turd")
+
+var canvas = document.getElementById("myCanvas");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+var ctx = canvas.getContext("2d");
+
+setInterval(animate, 10);
+
+function animate(){
+
+ctx.fillStyle = "black";
+ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+
+	//Flips directions if it's on the edge
+	if (x <= (window.innerWidth - window.innerWidth)){
+		flipX = false;
+	}  
+	if (x >= (window.innerWidth - 120)){
+		flipX = true;
+	}  
+
+	//Draws the image
+	if(flipX === true){
+		ctx.drawImage(turd, x, y, 100, 100);
+		x--;
+	}
+	if(flipX === false){
+		ctx.drawImage(turd, x, y, 100, 100);
+		x++;
+	}
+
+	//Flips directions if it's on the edge
+	if (y <= (window.innerHeight - window.innerHeight)){
+		flipY = false;
+	}  
+	if (y >= (window.innerHeight - 120)){
+		flipY = true;
+	}  
+
+	//Draws the image
+	if(flipY === true){
+		ctx.globalAlpha = 0.2
+		ctx.drawImage(turd, x, y, 100, 100);
+		y += -3;
+	}
+	if(flipY === false){
+		ctx.globalAlpha = 0.2
+		ctx.drawImage(turd, x, y, 100, 100);
+		y += 3;
+	}
+	
+}
+
+</script>
+
+</body>
+
+</html>

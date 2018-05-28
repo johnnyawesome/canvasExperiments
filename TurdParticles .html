@@ -1,0 +1,93 @@
+<html>
+    <head>
+
+        <meta charset="utf-8"/>
+
+        <title>Image Particles</title>
+
+    </head>
+
+    <body>
+
+        <canvas id="myCanvas"></canvas>
+
+        <img id="turdImage" src="http://www.stickpng.com/assets/images/580b57fcd9996e24bc43c39c.png"/>
+        
+        <script>
+
+            var canvas = document.getElementById("myCanvas"),
+                ctx = canvas.getContext("2d");
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                turdImage = document.getElementById("turdImage"),
+                turds = [],
+                speedX = 5,
+                speedY = 5;
+            
+            //Constructor for Turds
+            function turd (turdImage, posX, posY, speedX, speedY, id) {
+
+                this.turdImage = turdImage;
+                this.posX = posX;
+                this.posY = posY;
+                this.speedX = speedX;
+                this.speedY = speedY;
+                this.life = 0,
+                this.maxLife = 100;
+            }
+
+            //Generates new Turds
+            function generateTurd(){
+
+                    var turdStartX = window.innerWidth / 2
+                        turdStartY = window.innerHeight / 2,
+                        turdSpeedX = Math.floor(Math.random() * 10) - 5,
+                        turdSpeedY = Math.floor(Math.random() * 10) - 5;
+
+                    turds.unshift(new turd(turdImage, turdStartX, turdStartY, turdSpeedX, turdSpeedY));
+ 
+            }
+
+            generateTurd();
+
+            function cleanScreen(){
+
+                ctx.fillStyle = "black";
+                ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
+                ctx.fillRect(0, 0, window.innerWidth, window.innerHeight, );
+
+            }
+
+            //Draws the Screen
+            function drawScreen(turd){
+                
+                turd.posX += turd.speedX + Math.floor(Math.random() * 5) - 2;
+                turd.posY += turd.speedY + Math.floor(Math.random() * 5) - 2;
+
+                turd.life++;
+                if(turd.life >= turd.maxLife) turds.pop();
+
+                ctx.drawImage(turd.turdImage, turd.posX, turd.posY, 30, 30);
+              
+            }
+
+            function animate(){
+                cleanScreen();
+                generateTurd();
+                turds.forEach(drawScreen);
+            }
+
+            setInterval(animate, 50);
+            
+
+
+
+
+
+        
+        </script>
+
+    </body>
+
+</html>
